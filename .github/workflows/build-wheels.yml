@@ -39,9 +39,9 @@ jobs:
         run: |
           python -m pip install cibuildwheel==1.6.4
 
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v2
         with:
-          name: snap-stanford/snap
+          repository: snap-stanford/snap
           path: snap-root
 
       - name: Build wheels on Linux
