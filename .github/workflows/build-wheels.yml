@@ -13,8 +13,8 @@ env:
   # Only build on Python 3.x
   CIBW_BUILD: 'cp37-*'
   CIBW_SKIP: 'cp35-* cp39-* *-manylinux_i686'
-  CIBW_BEFORE_TEST: pip install nose mock
-  CIBW_TEST_COMMAND: nosetests -s -v -P {project}/python/tests
+  # CIBW_BEFORE_TEST: pip install nose mock
+  # CIBW_TEST_COMMAND: nosetests -s -v -P {project}/python/tests
   CIBW_ENVIRONMENT: "SNAPROOT=$(pwd)/snap-root"
 
 jobs:
@@ -48,7 +48,7 @@ jobs:
       - name: Build wheels on Linux
         if: runner.os == 'Linux'
         env:
-          CIBW_BEFORE_BUILD: 'yum -y install swig python3-devel; rpm -q python3-devel'
+          CIBW_BEFORE_BUILD: 'yum -y install swig python3-devel'
         run: |
           python -m cibuildwheel --output-dir dist
 
