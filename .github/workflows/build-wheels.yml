@@ -15,6 +15,7 @@ env:
   CIBW_SKIP: 'cp35-* cp39-* *-manylinux_i686'
   CIBW_BEFORE_TEST: pip install nose mock
   CIBW_TEST_COMMAND: nosetests -s -v -P {project}/python/tests
+  CIBW_ENVIRONMENT: "SNAPROOT=$(pwd)/snap-root"
 
 jobs:
   build_wheels:
@@ -37,12 +38,19 @@ jobs:
       - name: Install cibuildwheel
         run: |
           python -m pip install cibuildwheel==1.6.4
+
+      - uses: actions/checkout@master
+        with:
+          name: snap-stanford/snap
+          path: snap-root
+
       - name: Build wheels on Linux
         if: runner.os == 'Linux'
         env:
-          CIBW_BEFORE_BUILD: 'yum update -y; yum -y install swig'
+          CIBW_BEFORE_BUILD: 'yum -y install swig'
         run: |
           python -m cibuildwheel --output-dir dist
+
       - name: Store wheel as artifact
         uses: actions/upload-artifact@v2
         with:
