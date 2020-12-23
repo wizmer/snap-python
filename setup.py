@@ -55,5 +55,6 @@ setup(
     ],
     zip_safe=False,
     cmdclass=dict(build_ext=SwigBuild),
+    packages=['snap'],
     ext_modules=[SwigExtension('snap._snap2')],
 )
